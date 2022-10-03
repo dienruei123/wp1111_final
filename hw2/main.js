@@ -21,7 +21,7 @@ const init = () => {
   for (var i = 0; i < Object.keys(member_name).length; i++) {
     vacant_member.push(i + 1);
   }
-  var num = getRndInteger(1, 15);
+  var num = getRndInteger(0, 15);
   for (var i = 0; i < num; i++) {
     create_member(choose_random());
   }
@@ -37,6 +37,17 @@ const init = () => {
     setTimeout(Time, 10000);
   };
   Time();
+  if (num === 0) {
+    pin("self");
+  }
+  sizing();
+  member_count();
+};
+const member_count = () => {
+  var num = Object.keys(member_name).length - vacant_member.length + 1;
+  document.getElementsByClassName(
+    "google-meet__footer-member-count"
+  )[0].innerHTML = num;
 };
 const is_pinned = () => {
   return !document
@@ -44,6 +55,20 @@ const is_pinned = () => {
     .classList.contains("hidden");
 };
 const sizing = () => {
+  if (is_pinned()) {
+    var pinned = document.getElementsByClassName("google-meet__self-block")[0];
+    pinned.classList = "";
+    pinned.classList.add("google-meet__self-block");
+    if (
+      pinned
+        .getElementsByClassName("google-meet__self-profile-pic")[0]
+        .classList.contains("google-meet__member-profile-pic-larger")
+    ) {
+      pinned
+        .getElementsByClassName("google-meet__self-profile-pic")[0]
+        .classList.remove("google-meet__member-profile-pic-larger");
+    }
+  }
   const member_num =
     Object.keys(member_name).length -
     vacant_member.length +
@@ -61,14 +86,31 @@ const sizing = () => {
   });
   var modify = hori * vert - member_num;
   if (modify != 0) modify = hori - modify;
-  console.log(modify);
+  // console.log(modify);
   for (var i = member_num - modify; i < member_num; i++) {
     members[i].classList.add(`google-meet__member_width_mod${modify}`);
   }
-  if (is_pinned()) {
-    var pinned = document.getElementsByClassName("google-meet__self-block")[0];
-    pinned.classList = "";
-    pinned.classList.add("google-meet__self-block");
+  if (member_num + (is_pinned() ? 1 : 0) <= 2) {
+    // console.log(member_num + (is_pinned() ? 1 : 0));
+    [].forEach.call(members, (element) => {
+      var node = element.getElementsByClassName(
+        "google-meet__member-profile"
+      )[0].firstElementChild;
+      if (node.classList.contains("google-meet__member-profile-pic")) {
+        node.classList.remove("google-meet__member-profile-pic");
+        node.classList.add("google-meet__member-profile-pic-larger");
+      }
+    });
+  } else {
+    [].forEach.call(members, (element) => {
+      var node = element.getElementsByClassName(
+        "google-meet__member-profile"
+      )[0].firstElementChild;
+      if (node.classList.contains("google-meet__member-profile-pic-larger")) {
+        node.classList.remove("google-meet__member-profile-pic-larger");
+        node.classList.add("google-meet__member-profile-pic");
+      }
+    });
   }
 };
 
@@ -181,6 +223,7 @@ const create_member = (member) => {
   label_.setAttribute("for", "member-option-remove");
 
   sizing();
+  member_count();
 };
 const delete_member = (member) => {
   // console.log(member.match(/(\d+)/)[0]);
@@ -222,6 +265,7 @@ const delete_member = (member) => {
       .classList.add("hidden");
   }
   sizing();
+  member_count();
 };
 const getRndInteger = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
