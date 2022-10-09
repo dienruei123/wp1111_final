@@ -24,6 +24,7 @@ Run: `npm start` or `yarn start`
 
 ## Additional features
 
-1. Show current sorting mode by adding a black border to corresponding button(e.g. when sorting in "Completed" mode, a black border will be around `Complete` button)
-2. When sorting in "Complete" mode, show number of completed tasks instead of remaining active tasks.
+1. Show current filter mode by adding a black border to corresponding button(e.g. when filtering in "Completed" mode, a black border will be around `Complete` button)
+2. When filtering in "Complete" mode, show number of completed tasks instead of remaining active tasks.
 3. Change a little bit css to fix footer buttons to the center(originally, if the `Clear completed` button is invisible, footer buttons will align to the right).
+4. If all todo-items are deleted, filtering mode will become "All" whatever current filter mode is.

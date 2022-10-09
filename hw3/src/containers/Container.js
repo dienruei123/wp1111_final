@@ -5,31 +5,32 @@ import Todo from "../components/Todo";
 
 export default class Container extends Component {
   todos() {
-    let { show } = this.props;
-    if (this.props.total !== this.props.todos.length) {
+    let { props } = this;
+    let { total, show, todos } = props;
+    if (total !== todos.length) {
       console.error("Fatal Error: todos length not equal to todos total");
       alert("Fatal Error: todos length not equal to todos total");
       return;
     }
-    let todos = [];
-    this.props.todos.forEach((e) => {
+    let todosRender = [];
+    todos.forEach((e) => {
       if (
         show === "All" ||
         (show === "Completed" && e.completed === true) ||
         (show === "Active" && e.completed === false)
       )
-        todos.push(
+        todosRender.push(
           <Todo
             id={e.id}
             todo={e.todo}
             completed={e.completed}
-            onclickComplete={(event) => this.props.onclickComplete(e.id, event)}
-            onclickRemove={() => this.props.onclickRemove(e.id)}
+            onclickComplete={(event) => props.onclickComplete(e.id, event)}
+            onclickRemove={() => props.onclickRemove(e.id)}
             key={e.id}
           />
         );
     });
-    return todos;
+    return todosRender;
   }
   render() {
     return (

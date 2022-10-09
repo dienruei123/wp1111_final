@@ -4,10 +4,11 @@ import React, { Component } from "react";
 
 export default class Footer extends Component {
   showCount = () => {
-    if (this.props.show === "Completed") {
-      return this.props.completed_items + " completed";
+    let { show, completed_items, total } = this.props;
+    if (show === "Completed") {
+      return completed_items + " completed";
     }
-    return this.props.total - this.props.completed_items + " left";
+    return total - completed_items + " left";
   };
   buttonVisible = () => {
     if (this.props.completed_items === 0) return 0;
