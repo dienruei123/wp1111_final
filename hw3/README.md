@@ -4,7 +4,7 @@
 
 ### Run Program
 
-Download node_modules: `npm install`
+Download node_modules: `npm install`  
 Run: `npm start` or `yarn start`
 
 ## Basic features
