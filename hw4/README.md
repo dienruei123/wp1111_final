@@ -77,9 +77,11 @@ An example of revealing cells when click on the red box shown(initially unreveal
 
 ![](./README_images/info2-1.png)
 ![](./README_images/info2-2.png)
+
 Click on the red box will reveal all adjacent blocks(cells show in yellow box, red box must be revealed)
 
 An example of wrong flagging while revealing adjacent cells:
+
 ![](./README_images/info2-3.png)
 
 Tips: Although it violates the original rule in hw, the online minesweeper website exist such rules, so I managed to implement this feature.
