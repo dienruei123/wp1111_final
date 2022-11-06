@@ -8,11 +8,11 @@
    (Important!! Must add modules in both frontend and backend)
 
 ```bash
-yarn add
+yarn
 cd hw6/frontend
-yarn add
+yarn
 cd hw6/backend
-yarn add
+yarn
 ```
 
 - Run: First `yarn server` then `yarn start`
