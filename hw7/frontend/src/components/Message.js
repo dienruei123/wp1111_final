@@ -13,8 +13,8 @@ const StyledMessage = styled.div`
 
   & p:last-child {
     padding: 2px 5px;
-    border=radius: 5px;
-    background: #eee;
+    border-radius: 5px;
+    // background: #eeeee52;
     color: gray;
     margin: auto 0;
   }

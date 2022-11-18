@@ -1,10 +1,9 @@
 // import "./App.css"
-// import { useEffect } from "react"
-// import { Button, Input, message, Tag } from "antd"
-// import { useChat } from "./hooks/useChat"
+import { useEffect } from "react"
+import { useChat } from "./hooks/useChat"
 import styled from "styled-components"
-// import ChatRoom from "./ChatRoom"
-// import SignIn from "./SignIn"
+import ChatRoom from "./ChatRoom"
+import SignIn from "./SignIn"
 
 const Wrapper = styled.div`
   display: flex;
@@ -16,33 +15,22 @@ const Wrapper = styled.div`
   margin: auto;
 `
 
-// const App = () => {
-//   const { status, me, signedIn, displayStatus } = useChat()
-
-//   useEffect(() => {
-//     displayStatus(status)
-//   }, [status])
-
-//   return (
-//     // <Wrapper>
-//     //   {/* {signedIn ? <ChatRoom /> : <SignIn me={me} />} */}
-//     //   {/* <ChatRoom /> */}
-//     //   <SignIn me={me} />
-//     // </Wrapper>
-//     // <Wrapper>{123}</Wrapper>
-//     {
-//       /* <div>123</div> */
-//     }
-//     <Wrapper>
-//       123
-//     </Wrapper>
-
-//   )
-// }
 const App = () => {
+  const { status, me, signedIn, displayStatus } = useChat()
+
+  useEffect(() => {
+    displayStatus(status)
+  }, [status])
+
   return (
-    // <div>1232</div>
-    <Wrapper>1232</Wrapper>
+    <Wrapper>
+      {signedIn ? <ChatRoom /> : <SignIn me={me} />}
+      {/* <ChatRoom />
+      <SignIn me={me} /> */}
+    </Wrapper>
+    // <div>123</div>
+
+    // <Wrapper>123</Wrapper>
   )
 }
 

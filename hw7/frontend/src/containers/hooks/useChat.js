@@ -12,6 +12,7 @@ const ChatContext = createContext({
   messages: [],
   sendMessage: () => {},
   clearMessages: () => {},
+  displayStatus: () => {},
 })
 const ChatProvider = (props) => {
   const [status, setStatus] = useState({})
@@ -34,7 +35,7 @@ const ChatProvider = (props) => {
         break
       }
       case "output": {
-        setMessages(() => [...messages, ...payload])
+        setMessages((messages) => [...messages, ...payload])
         break
       }
       case "status": {

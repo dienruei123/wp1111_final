@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import styled from "styled-components"
 import { Button, Input, message, Tag } from "antd"
 import Title from "../components/Title"
@@ -19,7 +19,7 @@ const FootRef = styled.div`
 `
 
 const ChatRoom = () => {
-  const { me, messages, sendMessage, displayStatus } = useChat()
+  const { me, messages, sendMessage, displayStatus, clearMessages } = useChat()
   const [username, setUsername] = useState("")
   const [msg, setMsg] = useState("")
   const [msgSent, setMsgSent] = useState(false)
@@ -34,7 +34,7 @@ const ChatRoom = () => {
   const msgFooter = useRef(null)
 
   const displayMessages = () => {
-    messages.length === 0 ? (
+    return messages.length === 0 ? (
       <p style={{ color: "#ccc" }}>No messages...</p>
     ) : (
       messages.map(({ name, body }, i) => (
@@ -48,12 +48,14 @@ const ChatRoom = () => {
   }
   return (
     <>
-      {/* <div className="App-title">
-        <h1>Simple Chat</h1>
+      <div className="App-title">
         <Button type="primary" danger onClick={clearMessages}>
           Clear
         </Button>
-      </div> */}
+        {/* {messages.map(({ name, body }, i) => (
+          <Message name={name} isMe={name === me} message={body} key={i} />
+        ))} */}
+      </div>
       <Title name={me} />
       <ChatBoxesWrapper>
         {displayMessages()}
