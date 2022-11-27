@@ -9,6 +9,7 @@ export default {
       process.exit(1)
     }
     mongoose
+      // .connect("mongodb://localhost:27017", {
       .connect(process.env.MONGO_URL, {
         useNewUrlParser: true,
         useUnifiedTopology: true,

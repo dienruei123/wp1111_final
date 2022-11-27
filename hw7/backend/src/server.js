@@ -5,6 +5,7 @@ import mongoose from "mongoose"
 import WebSocket from "ws"
 import mongo from "./mongo"
 import wsConnect from "./wsConnect"
+import { v4 as uuidv4 } from "uuid"
 
 mongo.connect()
 
@@ -15,12 +16,14 @@ const db = mongoose.connection
 db.once("open", () => {
   console.log("MongoDB connected!")
   wss.on("connection", (ws) => {
-    wsConnect.initData(ws)
+    // wsConnect.initData(ws)
     // if (init) {
     //   ws.onmessage = wsConnect.initData(ws)
     //   init = false
     // }
-    ws.onmessage = wsConnect.onMessage(ws)
+    ws.box = ""
+    ws.id = uuidv4()
+    ws.onmessage = wsConnect.onMessage(wss, ws)
   })
 })
 

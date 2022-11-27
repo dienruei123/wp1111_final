@@ -10,9 +10,10 @@ const ChatContext = createContext({
   me: "",
   signedIn: false,
   messages: [],
+  startChat: () => {},
   sendMessage: () => {},
   clearMessages: () => {},
-  displayStatus: () => {},
+  clearLocalMessages: () => {},
 })
 const ChatProvider = (props) => {
   const [status, setStatus] = useState({})
@@ -30,12 +31,18 @@ const ChatProvider = (props) => {
     const { data } = byteString
     const [task, payload] = JSON.parse(data)
     switch (task) {
+      case "create": {
+        setMessages(payload)
+        // console.log(payload)
+        break
+      }
       case "init": {
         setMessages(payload)
         break
       }
       case "output": {
         setMessages((messages) => [...messages, ...payload])
+        // console.log(messages)
         break
       }
       case "status": {
@@ -54,20 +61,34 @@ const ChatProvider = (props) => {
         break
     }
   }
-  const sendData = async (data) => {
-    await client.send(JSON.stringify(data))
+
+  const startChat = (name, to) => {
+    if (!name || !to) throw new Error("Name or to required.")
+
+    sendData({
+      type: "CHAT",
+      payload: { name, to },
+    })
   }
-  const sendMessage = (payload) => {
-    sendData(["input", payload])
-    // setMessages([...messages, payload]);
-    // setStatus({
-    //   type: "success",
-    //   msg: "Message sent.",
-    // });
-    // console.log(payload);
+  const sendData = (data) => {
+    client.send(JSON.stringify(data))
+  }
+  const sendMessage = ({ name, to, body }) => {
+    if (!name || !to || !body) {
+      throw new Error("Name or to or body required.")
+    }
+    sendData({
+      type: "MESSAGE",
+      payload: { name, to, body },
+    })
   }
   const clearMessages = () => {
-    sendData(["clear"])
+    sendData({
+      type: "CLEAR",
+    })
+  }
+  const clearLocalMessages = () => {
+    setMessages([])
   }
   const displayStatus = (payload) => {
     if (payload.msg) {
@@ -97,8 +118,10 @@ const ChatProvider = (props) => {
         setMe,
         setSignedIn,
         sendMessage,
+        startChat,
         clearMessages,
         displayStatus,
+        clearLocalMessages,
       }}
       {...props}
     />
