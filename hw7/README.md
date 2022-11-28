@@ -2,6 +2,19 @@
 
 ###### Author: B10901038 吳典叡
 
+### Run
+
+```bash
+cd frontend
+yarn
+yarn start (for frontend)
+
+At another terminal:
+cd backend
+yarn
+yarn server (for backend)
+```
+
 ### Basic features
 
 1. SignIn page: Enter name(required, otherwise alert user with error message) to hop into chatroom, no need to enter password; the name of the title will be the user's name.
