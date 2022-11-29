@@ -26,15 +26,21 @@ exports.GetSearch = async (req, res) => {
   //   do `res.status(403).send({ message: 'error', contents: ... })`
 
   // TODO Part I-3-a: find the information to all restaurants
-  Info.collection
-    .find({
-      price: { $in: priceFilter },
-      tag: { $elemMatch: { $or: [{ $in: mealFilter }, { $in: typeFilter }] } },
-    })
+  console.log(req.query)
+  Info
+    .find
+    // {
+    //   price: { $in: priceFilter },
+    //     tag: { $elemMatch: { $or: [{ $in: mealFilter }, { $in: typeFilter }] } },
+    // }
+    // { price: 1 }
+    ()
     .exec((err, data) => {
       if (err) {
+        console.log("data")
         res.status(403).send({ message: "error", contents: data })
       } else {
+        // console.log(data)
         res.status(200).send({ message: "success", contents: data })
       }
     })
@@ -49,16 +55,24 @@ exports.GetInfo = async (req, res) => {
   /****************************************/
 
   // NOTE USE THE FOLLOWING FORMAT. Send type should be
-  // if success:
-  // {
-  //    message: 'success'
-  //    contents: the data to be sent. Hint: A dictionary of the restaruant's information.
-  // }
-  // else:
-  // {
-  //    message: 'error'
-  //    contents: []
-  // }
+  //   if success:
+  //   {
+  //      message: 'success'
+  //      contents: the data to be sent. Hint: A dictionary of the restaruant's information.
+  //   }
+  //   else:
+  //   {
+  //      message: 'error'
+  //      contents: []
+  //   }
 
-  // TODO Part III-2: find the information to the restaurant with the id that the user requests
+  console.log(id)
+  // TODO Part III-2: find the information to the restaurant with the id that the user reques
+  Info.findOne({ id: id }).exec((err, data) => {
+    if (!err) {
+      res.status(200).send({ message: "success", contents: data })
+    } else {
+      res.status(403).send({ message: "error", contents: [] })
+    }
+  })
 }
