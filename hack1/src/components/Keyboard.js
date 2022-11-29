@@ -31,7 +31,10 @@ const Keyboard = ({ usedChars }) => {
           firstRowLetters.map((letter) => {
             const color = usedChars[letter.char];
             return letter.char === "Enter" ? (
-              <div key={"char_" + letter.char} className="Keyboard-char-enter">
+              <div
+                key={"char_" + letter.char}
+                className={"Keyboard-char-enter"}
+              >
                 {letter.char}
               </div>
             ) : letter.char === "Backspace" ? (
@@ -45,7 +48,9 @@ const Keyboard = ({ usedChars }) => {
               <div
                 id={"char_" + letter.char}
                 key={"char_" + letter.char}
-                className={"Keyboard-char " + color}
+                className={
+                  "Keyboard-char" + (color === undefined ? "" : " " + color)
+                }
               >
                 {letter.char}
               </div>
@@ -71,7 +76,9 @@ const Keyboard = ({ usedChars }) => {
               <div
                 id={"char_" + letter.char}
                 key={"char_" + letter.char}
-                className={"Keyboard-char " + color}
+                className={
+                  "Keyboard-char" + (color === undefined ? "" : " " + color)
+                }
               >
                 {letter.char}
               </div>
@@ -99,7 +106,9 @@ const Keyboard = ({ usedChars }) => {
               <div
                 id={"char_" + letter.char}
                 key={"char_" + letter.char}
-                className={"Keyboard-char " + color}
+                className={
+                  "Keyboard-char" + (color === undefined ? "" : " " + color)
+                }
               >
                 {letter.char}
               </div>

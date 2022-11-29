@@ -46,14 +46,15 @@ const useWordle = (solution) => {
     let setSol = [];
     let used = [false, false, false, false, false];
     const solList = solution.split("");
-    let setSolSet = new Set();
     solList.forEach((char) => {
-      setSol[char] += 1;
-      setSolSet.add(char);
+      if (Object.keys(setSol).includes(char)) {
+        setSol[char] += 1;
+      } else setSol[char] = 1;
     });
     const guessList = curGuess.split("");
 
-    // console.log(solList, guessList);
+    console.log(solList, guessList);
+    // console.log(setSol);
     let guessResult = guesses;
     guessResult[turn] = [];
     for (let i = 0; i < guessList.length; i++) {
@@ -63,20 +64,21 @@ const useWordle = (solution) => {
         used[i] = true;
         guessResult[turn][i].color = "green";
         setSol[guessList[i]] -= 1;
-        if (!setSol[guessList[i]]) setSolSet.delete(guessList[i]);
+        if (!setSol[guessList[i]]) delete setSol[guessList[i]];
       }
     }
     for (let i = 0; i < guessList.length; i++) {
       if (!used[i]) {
-        if (setSolSet.has(guessList[i])) {
+        if (Object.keys(setSol).includes(guessList[i])) {
           guessResult[turn][i].color = "yellow";
           setSol[guessList[i]] -= 1;
-          if (!setSol[guessList[i]]) setSolSet.delete(guessList[i]);
+          if (!setSol[guessList[i]]) delete setSol[guessList[i]];
         } else {
           guessResult[turn][i].color = "grey";
         }
       }
     }
+    console.log(setSol);
     // console.log("guessresult", guessResult[0].char);
 
     // add the formatted guess generated into guesses.
@@ -96,14 +98,14 @@ const useWordle = (solution) => {
     }
 
     // 5-2) usedChars update
-    let usedChars_ = {};
-    for (let i = 0; i < guessList.length; i++) {
-      if (guessResult[turn][i].color === "grey") {
-        usedChars_[guessResult[turn][i].char] = "grey";
-      }
-    }
+    let usedChars_ = usedChars;
     for (let i = 0; i < guessList.length; i++) {
       if (guessResult[turn][i].color === "yellow") {
+        if (
+          Object.keys(usedChars_).includes(guessResult[turn][i].char) &&
+          usedChars_[guessResult[turn][i].char] === "green"
+        )
+          continue;
         usedChars_[guessResult[turn][i].char] = "yellow";
       }
     }
