@@ -20,7 +20,7 @@ const SearchPage = () => {
   const [restaurants, setRestaurant] = useState([])
   const getRestaurant = async () => {
     // TODO Part I-3-b: get information of restaurants from DB
-    // console.log(state.priceFilter)
+    // console.log(state)
     const {
       data: { message: message, contents: data },
     } = await instance.get("/getSearch", {

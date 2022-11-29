@@ -12,7 +12,7 @@ import "../css/restaurantPage.css"
 
 const Information = ({ info, rating }) => {
   const getTag = (tags) => {
-    console.log(tags)
+    // console.log(tags)
     return (
       <>
         {/* TODO Part III-2-a render tags */}
@@ -38,37 +38,51 @@ const Information = ({ info, rating }) => {
   }
 
   const getBusiness = (time) => {
-    console.log(time)
+    // console.log(time)
     return (
       <div className="businessTime">
         {/* TODO Part III-2-c: render business time for each day*/}
         <div className="singleDay">
           <div className="day">Mon</div>
-          <div className="time">{time.Mon ? time.Mon : "Closed"}</div>
+          <div className="time">
+            {time.Mon ? time.Mon : time.All ? time.All : "Closed"}
+          </div>
         </div>
         <div className="singleDay">
           <div className="day">Tue</div>
-          <div className="time">{time.Tue ? time.Tue : "Closed"}</div>
+          <div className="time">
+            {time.Tue ? time.Tue : time.All ? time.All : "Closed"}
+          </div>
         </div>
         <div className="singleDay">
           <div className="day">Wed</div>
-          <div className="time">{time.Wed ? time.Wed : "Closed"}</div>
+          <div className="time">
+            {time.Wed ? time.Wed : time.All ? time.All : "Closed"}
+          </div>
         </div>
         <div className="singleDay">
           <div className="day">Thr</div>
-          <div className="time">{time.Thr ? time.Thr : "Closed"}</div>
+          <div className="time">
+            {time.Thr ? time.Thr : time.All ? time.All : "Closed"}
+          </div>
         </div>
         <div className="singleDay">
           <div className="day">Fri</div>
-          <div className="time">{time.Fri ? time.Fri : "Closed"}</div>
+          <div className="time">
+            {time.Fri ? time.Fri : time.All ? time.All : "Closed"}
+          </div>
         </div>
         <div className="singleDay">
           <div className="day">Sat</div>
-          <div className="time">{time.Sat ? time.Sat : "Closed"}</div>
+          <div className="time">
+            {time.Sat ? time.Sat : time.All ? time.All : "Closed"}
+          </div>
         </div>
         <div className="singleDay">
           <div className="day">Sun</div>
-          <div className="time">{time.Sun ? time.Sun : "Closed"}</div>
+          <div className="time">
+            {time.Sun ? time.Sun : time.All ? time.All : "Closed"}
+          </div>
         </div>
       </div>
     )

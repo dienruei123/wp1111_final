@@ -26,26 +26,38 @@ exports.GetSearch = async (req, res) => {
   //   do `res.status(403).send({ message: 'error', contents: ... })`
 
   // TODO Part I-3-a: find the information to all restaurants
-  console.log(req.query)
-  Info
-    .find
-    // {
-    //   price: { $in: priceFilter },
-    //     tag: { $elemMatch: { $or: [{ $in: mealFilter }, { $in: typeFilter }] } },
-    // }
-    // { price: 1 }
-    ()
+  const PriceFilter =
+    priceFilter === undefined ? undefined : priceFilter.map((e) => e.length)
+  //   console.log(PriceFilter, mealFilter, typeFilter)
+  Info.find()
+    .sort({ [sortBy]: 1 })
     .exec((err, data) => {
       if (err) {
-        console.log("data")
-        res.status(403).send({ message: "error", contents: data })
+        // console.log(err)
+        res.status(403).send({ message: "error", contents: [] })
       } else {
-        // console.log(data)
-        res.status(200).send({ message: "success", contents: data })
+        console.log(data)
+        let Filter = data
+        Filter = Filter.filter((e) =>
+          PriceFilter === undefined ? true : PriceFilter.includes(e.price)
+        )
+        // console.log(Filter)
+        Filter = Filter.filter((e) =>
+          mealFilter === undefined
+            ? true
+            : e.tag.some((ee) => mealFilter.includes(ee))
+        )
+        Filter = Filter.filter((e) =>
+          typeFilter === undefined
+            ? true
+            : e.tag.some((ee) => typeFilter.includes(ee))
+        )
+        res.status(200).send({ message: "success", contents: Filter })
       }
     })
 
   // TODO Part II-2-a: revise the route so that the result is filtered with priceFilter, mealFilter and typeFilter
+
   // TODO Part II-2-b: revise the route so that the result is sorted by sortBy
 }
 
@@ -66,7 +78,7 @@ exports.GetInfo = async (req, res) => {
   //      contents: []
   //   }
 
-  console.log(id)
+  //   console.log(id)
   // TODO Part III-2: find the information to the restaurant with the id that the user reques
   Info.findOne({ id: id }).exec((err, data) => {
     if (!err) {

@@ -49,8 +49,12 @@ const Filter = ({
 
   const modifyFilter = (key, filter) => {
     // TODO Part II-1: change filter state on clicking the pertaining checkboxes
+    // console.log(key, filter)
+    const a = []
+    if (filter.includes(key)) {
+      filter = filter.filter((e) => e !== key)
+    } else filter.push(key)
     console.log(key, filter)
-    filter.push(key)
     return filter
   }
 

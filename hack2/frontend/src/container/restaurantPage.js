@@ -30,11 +30,18 @@ const RestaurantPage = () => {
     } = await instance.get("/getInfo", {
       params: { id: id },
     })
-    console.log(data)
+    // console.log(data)
     setInfo(data)
   }
   const getComments = async () => {
     // TODO Part III-3: get a restaurant's comments
+    const {
+      data: { message: message, contents: data },
+    } = await instance.get("/getCommentsByRestaurantId", {
+      params: { restaurantId: id },
+    })
+    // console.log(data)
+    setComments(data)
   }
   useEffect(() => {
     if (Object.keys(info).length === 0) {
@@ -44,11 +51,25 @@ const RestaurantPage = () => {
 
   useEffect(() => {
     // TODO Part III-3-c: update the comment display immediately after submission
+    getComments()
+    calculateRating()
   }, [comments])
 
   /* TODO Part III-2-b: calculate the average rating of the restaurant */
-  let rating = 0
-  console.log(info)
+  //   let rating = 0
+  const [rating, setRating] = useState(0)
+  const calculateRating = () => {
+    let newRating = 0
+    comments.forEach((comment) => {
+      newRating += comment.rating
+    })
+    if (comments.length !== 0) newRating = newRating / comments.length
+    setRating(newRating)
+    // console.log(newRating)
+  }
+  //   console.log(rating)
+
+  //   console.log(info)
 
   return (
     <div className="restaurantPageContainer">
