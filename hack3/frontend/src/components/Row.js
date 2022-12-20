@@ -50,6 +50,7 @@ function Row({ item, updateItem, deleteItem }) {
         },
       },
     })
+    console.log(formData)
   }
 
   return (
