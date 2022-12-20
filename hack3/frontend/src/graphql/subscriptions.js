@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client"
 
 export const ITEM_CREATED_SUBSCRIPTION = gql`
   subscription ItemCreated {
@@ -11,7 +11,7 @@ export const ITEM_CREATED_SUBSCRIPTION = gql`
       description
     }
   }
-`;
+`
 
 export const ITEM_UPDATED_SUBSCRIPTION = gql`
   subscription ItemUpdated {
@@ -24,8 +24,12 @@ export const ITEM_UPDATED_SUBSCRIPTION = gql`
       description
     }
   }
-`;
+`
 
 // TODO 6.4 Graphql of subscription
-
+export const ITEM_DELETED_SUBSCRIPTION = gql`
+  subscription ItemDeleted {
+    itemDeleted
+  }
+`
 // TODO 6.4 End
