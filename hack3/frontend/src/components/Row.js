@@ -1,31 +1,30 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useState } from "react"
+import PropTypes from "prop-types"
 
-import TableCell from '@mui/material/TableCell';
-import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
+import TableCell from "@mui/material/TableCell"
+import TableRow from "@mui/material/TableRow"
+import Typography from "@mui/material/Typography"
+import Collapse from "@mui/material/Collapse"
+import IconButton from "@mui/material/IconButton"
 
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from "@mui/icons-material/Delete"
+import EditIcon from "@mui/icons-material/Edit"
 
-import dayjs from '../utils/day';
-import ItemFormModal from './ItemFormModal';
+import dayjs from "../utils/day"
+import ItemFormModal from "./ItemFormModal"
+import { useMutation } from "@apollo/client"
 
-function Row({
-  item, updateItem, deleteItem,
-}) {
-  const [descriptionOpen, setDescriptionOpen] = useState(false);
-  const [editOpen, setEditOpen] = useState(false);
+function Row({ item, updateItem, deleteItem }) {
+  const [descriptionOpen, setDescriptionOpen] = useState(false)
+  const [editOpen, setEditOpen] = useState(false)
 
   const onCollapse = () => {
-    setDescriptionOpen((open) => !open);
-  };
+    setDescriptionOpen((open) => !open)
+  }
 
   const onEdit = () => {
-    setEditOpen((open) => !open);
-  };
+    setEditOpen((open) => !open)
+  }
 
   const handleDelete = () => {
     deleteItem({
@@ -34,38 +33,46 @@ function Row({
       },
       onError: (err) => {
         // eslint-disable-next-line no-console
-        console.error(err);
+        console.error(err)
       },
-    });
-  };
+    })
+  }
 
   const handleSubmitEdit = (formData) => {
     updateItem({
       variables: {
         // TODO 4 Use `updateItem` and pass the correct variables
-
+        input: formData,
         // TODO End
         onError: (err) => {
           // eslint-disable-next-line no-console
-          console.error(err);
+          console.error(err)
         },
       },
-    });
-  };
+    })
+  }
 
   return (
     <>
       <TableRow data-cy="item" key={item.id} hover>
-        <TableCell onClick={onCollapse} sx={{ cursor: 'pointer' }}>
+        <TableCell onClick={onCollapse} sx={{ cursor: "pointer" }}>
           <Typography>{item.date && dayjs(item.date).calendar()}</Typography>
         </TableCell>
-        <TableCell data-cy="item-name" onClick={onCollapse} sx={{ cursor: 'pointer' }}>
+        <TableCell
+          data-cy="item-name"
+          onClick={onCollapse}
+          sx={{ cursor: "pointer" }}
+        >
           <Typography>{item.name}</Typography>
         </TableCell>
         <TableCell data-cy="item-amount" align="right">
           <Typography>{item.amount && `$${item.amount}`}</Typography>
         </TableCell>
-        <TableCell data-cy="item-category" onClick={onCollapse} sx={{ cursor: 'pointer' }}>
+        <TableCell
+          data-cy="item-category"
+          onClick={onCollapse}
+          sx={{ cursor: "pointer" }}
+        >
           <Typography>{item.category?.toLowerCase()}</Typography>
         </TableCell>
         <TableCell align="right" data-cy="item-edit">
@@ -81,10 +88,10 @@ function Row({
         <TableCell colSpan={5} style={{ paddingTop: 0, paddingBottom: 0 }}>
           <Collapse in={descriptionOpen} timeout="auto" unmountOnExit>
             <div className="p-4">
-              <Typography gutterBottom>
-                Descriptions
+              <Typography gutterBottom>Descriptions</Typography>
+              <Typography variant="subtitle2" sx={{ textIndent: "1rem" }}>
+                {item.description || "No description"}
               </Typography>
-              <Typography variant="subtitle2" sx={{ textIndent: '1rem' }}>{item.description || 'No description'}</Typography>
             </div>
           </Collapse>
         </TableCell>
@@ -97,7 +104,7 @@ function Row({
         defaultFormData={item}
       />
     </>
-  );
+  )
 }
 
 Row.propTypes = {
@@ -111,6 +118,6 @@ Row.propTypes = {
   }).isRequired,
   updateItem: PropTypes.func.isRequired,
   deleteItem: PropTypes.func.isRequired,
-};
+}
 
-export default Row;
+export default Row
