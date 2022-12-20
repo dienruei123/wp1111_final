@@ -1,33 +1,34 @@
-import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import React, { useState } from "react"
+import { v4 as uuidv4 } from "uuid"
 
-import { useMutation } from '@apollo/client';
-import { useHotkeys } from 'react-hotkeys-hook';
+import { useMutation } from "@apollo/client"
+import { useHotkeys } from "react-hotkeys-hook"
 
-import AddIcon from '@mui/icons-material/Add';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
+import AddIcon from "@mui/icons-material/Add"
+import Typography from "@mui/material/Typography"
+import Paper from "@mui/material/Paper"
 
-import ItemFormModal from './ItemFormModal';
+import ItemFormModal from "./ItemFormModal"
 
-import { CREATE_ITEM_MUTATION } from '../graphql/mutations';
+import { CREATE_ITEM_MUTATION } from "../graphql/mutations"
 
 function NewItem() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   // TODO 3.2 Evoke the CreateItem Mutation
-
+  const [createItem, { data, loading, error }] =
+    useMutation(CREATE_ITEM_MUTATION)
   // TODO 3.2 End
 
   const handleOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
-  useHotkeys('ctrl+k, ', handleOpen, []);
+  useHotkeys("ctrl+k, ", handleOpen, [])
 
   const handleSubmit = (formData) => {
     // TODO 3.3 Apply the `createItem` callback function
-    /*
+
     createItem({
       variables: {
         input: {
@@ -35,24 +36,20 @@ function NewItem() {
           ...formData,
         },
       },
-    });
-    */
+    })
+
     // TODO 3.3 End
-  };
+  }
 
   return (
     <>
-      <button
-        type="button"
-        onClick={handleOpen}
-        data-cy="new-item-button"
-      >
+      <button type="button" onClick={handleOpen} data-cy="new-item-button">
         <Paper
           className="px-3 py-2"
           sx={{
-            borderRadius: '0.5rem',
-            transition: 'background-color 0.2s ease-in-out',
-            '&:hover': {
+            borderRadius: "0.5rem",
+            transition: "background-color 0.2s ease-in-out",
+            "&:hover": {
               bgcolor: (theme) => theme.palette.grey[300],
             },
           }}
@@ -72,12 +69,12 @@ function NewItem() {
         open={open}
         title="Add new item"
         handleClose={() => {
-          setOpen(false);
+          setOpen(false)
         }}
         onSubmit={handleSubmit}
       />
     </>
-  );
+  )
 }
 
-export default NewItem;
+export default NewItem
