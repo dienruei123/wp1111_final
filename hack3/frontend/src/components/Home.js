@@ -70,9 +70,11 @@ function Home() {
       document: ITEM_DELETED_SUBSCRIPTION,
       updateQuery: (prev, { subscriptionData }) => {
         if (!subscriptionData.data) return prev
-        const updatedItem = subscriptionData.data.itemDeleted
+        const deletedItem = subscriptionData.data.itemDeleted
         return {
-          items: prev,
+          items: prev.items.filter((item) => {
+            return item.id !== deletedItem
+          }),
         }
       },
     })
