@@ -196,7 +196,7 @@ const Event = () => {
                 <div className="list">
                   <StyleIcon style={{ padding: "0.5em" }} />
                   <div className="info">
-                    <Stack direction="row" spacing={1}>
+                    <Stack direction="column" spacing={1}>
                       {data.event.tags.map((tagName) => (
                         <Chip key={tagName} label={tagName} color="primary" />
                       ))}
