@@ -33,7 +33,7 @@ export default function AlignItemsList({ info }) {
               </Avatar>
             </ListItemAvatar>
             <ListItemText primary={data.name} secondary={data.date} />
-            <Stack direction="row" spacing={1}>
+            <Stack direction="column" spacing={1}>
               {data.property.map((prop) => (
                 <Chip
                   key={prop}
