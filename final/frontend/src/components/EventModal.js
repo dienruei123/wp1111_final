@@ -14,6 +14,7 @@ import { useNavigate } from "react-router"
 import { useRent } from "../containers/hooks/useRent"
 import defaultIMG from "../eventPictures/2023_NEW-YORK.jpg"
 import "dayjs"
+import { Tags } from "./Tags"
 
 const style = {
   position: "absolute",
@@ -36,14 +37,7 @@ const BoxField = styled(Box)({
   mb: 2,
 })
 
-const properties = [
-  "Entertainment",
-  "Academic",
-  "Arts and Cultural",
-  "Sports",
-  "Service",
-  "Social",
-]
+const properties = Tags
 
 export default function BasicModal({ open, handleClose, username }) {
   const [activityname, setActivityname] = useState("")
