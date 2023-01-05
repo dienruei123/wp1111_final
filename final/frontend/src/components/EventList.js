@@ -46,7 +46,7 @@ export default function AlignItemsList({ info }) {
           </ListItem>
         ))
       ) : (
-        <span>No Event!</span>
+        <div className="centerparagraph">No Event!</div>
       )}
     </List>
   )
