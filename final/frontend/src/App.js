@@ -15,6 +15,7 @@ import Event from "./containers/EventPage"
 import { useRent } from "./containers/hooks/useRent"
 import AllEvent from "./containers/AllEventPage"
 import AllEventQuery from "./containers/AllEventQuery"
+import ErrorPage from "./components/ErrorPage"
 
 const App = () => {
   const useRentContext = useRent()
@@ -37,12 +38,9 @@ const App = () => {
         <Route exact path="/" element={<HomePage />} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/register" element={<Register />} />
-        <Route exact path="/calendar" element={<Calendar />} />
-        <Route exact path="/participant" element={<Participant />} />
-        <Route exact path="/host" element={<Host />} />
         <Route exact path="/event/:id" element={<Event Host={host} />} />
         <Route exact path="/allevents" element={<AllEvent />} />
-        <Route exact path="/allEventQuery" element={<AllEventQuery />} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
   )

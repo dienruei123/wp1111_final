@@ -75,207 +75,209 @@ const IconWrapper = styled.div`
 const weekDay = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
 const Event = () => {
-    const { id } = useParams()
-    console.log(id)
-    const useRentContext = useRent()
-    const { toDateString } = useRent()
-    const { username, addtoEventlist } = useRentContext
-    const { identity } = useRentContext
-    const { userEvents , addComment} = useRentContext
-    const { data, error, subscribeToMore} = useQuery(EVENT_QUERY, {
-        variables: {
-            id: id,
-        },
-        pollInterval: 1,
-    })
-    // console.log(data.event, error)
-    // const { event } = data
-    //   console.log(event)
-    const [comments, setComments] = useState([])
-    const [loading, setLoading] = useState(true)
-    const [isjoined, setIsjoined] = useState(false)
+  const { id } = useParams()
+  console.log(id)
+  const useRentContext = useRent()
+  const { toDateString } = useRent()
+  const { username, addtoEventlist } = useRentContext
+  const { identity } = useRentContext
+  const { userEvents, addComment } = useRentContext
+  const { data, error, subscribeToMore } = useQuery(EVENT_QUERY, {
+    variables: {
+      id: id,
+    },
+    pollInterval: 1,
+  })
+  // console.log(data.event, error)
+  // const { event } = data
+  //   console.log(event)
+  const [comments, setComments] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [isjoined, setIsjoined] = useState(false)
 
-    useEffect(() => {
-        console.log(userEvents)
-        if (userEvents.some((event) => event.eventId === id)) setIsjoined(true)
-        else setIsjoined(false)
-    }, [])
+  useEffect(() => {
+    console.log(userEvents)
+    if (userEvents.some((event) => event.id === id)) setIsjoined(true)
+    else setIsjoined(false)
+  }, [])
 
-    useEffect(() => {
-        if (data && !error) {
-            setComments(data.event.comments)
-        }
-    }, [data])
-
-    useEffect(()=> {
-        try{
-            subscribeToMore({
-                document: COMMENTED_SUBSCRIPTION,
-                variables:{
-                    eventId: id,
-                },
-                updateQuery: (prev, {subscriptionData}) => {
-                    if(!subscriptionData.data) return prev
-                    const comment = subscriptionData.data.commented
-                    console.log(prev)
-                    
-                    return {
-                        event: {
-                            ...prev.event, 
-                            rating: (prev.event.rating * prev.event.comments.length + comment.stars) / (prev.event.comments.length + 1),
-                            comments: [...prev.event.comments, comment]
-                        }
-                    }
-                }
-            })
-        }
-        catch(e) {
-            console.log(e)
-        }
-    }, [subscribeToMore])
-
-
-    //   let rating = 0
-    //   for (let i = 0; i < comments.length; i++) {
-    //     rating += comments[i].rating
-    //   }
-    //   rating = rating / comments.length
-
-    const AddToEventlist = async () => {
-        try {
-            const { data } = await addtoEventlist({
-                variables: {
-                    username: username,
-                    eventId: id,
-                },
-            })
-            //   console.log(data)
-            if (data) {
-                if (data.addtoEventlist === "EVENT_CANCELLED") setIsjoined(false)
-                else if (data.addtoEventlist === "EVENT_JOINED") setIsjoined(true)
-                else throw new Error("ADDEVENTSTATUS_INVALID_ERROR")
-            }
-        } catch (error) {
-            console.log(error)
-        }
+  useEffect(() => {
+    if (data && !error) {
+      setComments(data.event.comments)
     }
+  }, [data])
 
-    return (
-        <Wrapper>
-            <ButtonAppBar />
-            {!data ? (
-                <></>
-            ) : (
-                <BodyWrapper>
-                    <EventWrapper>
-                        <div className="mainpictureContainer">
-                            <div className="mainpicture">
-                                <img
-                                    className="photo"
-                                    src={data.event.imageURL}
-                                    alt="new year"
-                                />
-                            </div>
-                            <div className="infoContainer">
-                                <div className="list">
-                                    <FestivalIcon style={{ padding: "0.5em" }} />
-                                    <p className="info">{data.event.eventname}</p>
-                                </div>
-                                <div className="list">
-                                    <DateRangeIcon style={{ padding: "0.5em" }} />
-                                    <p className="info">
-                                        {toDateString(data.event.eventdatefrom)}
-                                    </p>
-                                </div>
-                                <div className="list">
-                                    <PlaceIcon style={{ padding: "0.5em" }} />
-                                    <p className="info">New York City </p>
-                                </div>
-                                <div className="list">
-                                    <StyleIcon style={{ padding: "0.5em" }} />
-                                    <div className="info">
-                                        <Stack direction="row" spacing={1}>
-                                            {data.event.tags.map((tagName) => (
-                                                <Chip key={tagName} label={tagName} color="primary" />
-                                            ))}
-                                        </Stack>
-                                    </div>
-                                </div>
-                                {identity === "Participant" ? (
-                                    <div className="list">
-                                        <IconButton
-                                            onClick={AddToEventlist}
-                                            style={{
-                                                width: "48px",
-                                                height: "48px",
-                                                cursor: "pointer",
-                                            }}
-                                        >
-                                            {isjoined ? (
-                                                <BookmarkAddedIcon style={{ padding: "0.5em" }} />
-                                            ) : (
-                                                <BookmarkAddIcon style={{ padding: "0.5em" }} />
-                                            )}
-                                        </IconButton>
-                                        <p className="info">
-                                            {isjoined ? "Joined" : "Add to My Event"}
-                                        </p>
-                                    </div>
-                                ) : (
-                                    <></>
-                                )}
-                            </div>
-                        </div>
+  useEffect(() => {
+    try {
+      subscribeToMore({
+        document: COMMENTED_SUBSCRIPTION,
+        variables: {
+          eventId: id,
+        },
+        updateQuery: (prev, { subscriptionData }) => {
+          if (!subscriptionData.data) return prev
+          const comment = subscriptionData.data.commented
+          console.log(prev)
 
-                        <h2 className="description">Description</h2>
-                        <hr className="line"></hr>
-                        <div className="paragraph">
-                            <p>{data.event.description}</p>
-                        </div>
-                        <HostWrapper>
-                            <div style={{ padding: "0px 25px 0px 0px" }}>
-                                <div className="hostIcon">{data.event.hostname[0]}</div>
-                            </div>
-                            <div
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    justifyContent: "center",
-                                }}
-                            >
-                                <strong className="hostedby">HOSTED BY</strong>
-                                <p className="hostName">{data.event.hostname}</p>
-                                {/* <h1></h1> */}
-                                {/* <button className="buttonstyle" type="button">
+          return {
+            event: {
+              ...prev.event,
+              rating:
+                (prev.event.rating * prev.event.comments.length +
+                  comment.stars) /
+                (prev.event.comments.length + 1),
+              comments: [...prev.event.comments, comment],
+            },
+          }
+        },
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  }, [subscribeToMore])
+
+  //   let rating = 0
+  //   for (let i = 0; i < comments.length; i++) {
+  //     rating += comments[i].rating
+  //   }
+  //   rating = rating / comments.length
+
+  const AddToEventlist = async () => {
+    try {
+      const { data } = await addtoEventlist({
+        variables: {
+          username: username,
+          eventId: id,
+        },
+      })
+      //   console.log(data)
+      if (data) {
+        console.log(data.addtoEventlist)
+        if (data.addtoEventlist === "EVENT_CANCELED") setIsjoined(false)
+        else if (data.addtoEventlist === "EVENT_JOINED") setIsjoined(true)
+        else throw new Error("ADDEVENTSTATUS_INVALID_ERROR")
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  return (
+    <Wrapper>
+      <ButtonAppBar />
+      {!data ? (
+        <></>
+      ) : (
+        <BodyWrapper>
+          <EventWrapper>
+            <div className="mainpictureContainer">
+              <div className="mainpicture">
+                <img
+                  className="photo"
+                  src={data.event.imageURL}
+                  alt="new year"
+                />
+              </div>
+              <div className="infoContainer">
+                <div className="list">
+                  <FestivalIcon style={{ padding: "0.5em" }} />
+                  <p className="info">{data.event.eventname}</p>
+                </div>
+                <div className="list">
+                  <DateRangeIcon style={{ padding: "0.5em" }} />
+                  <p className="info">
+                    {toDateString(data.event.eventdatefrom)}
+                  </p>
+                </div>
+                <div className="list">
+                  <PlaceIcon style={{ padding: "0.5em" }} />
+                  <p className="info">New York City </p>
+                </div>
+                <div className="list">
+                  <StyleIcon style={{ padding: "0.5em" }} />
+                  <div className="info">
+                    <Stack direction="row" spacing={1}>
+                      {data.event.tags.map((tagName) => (
+                        <Chip key={tagName} label={tagName} color="primary" />
+                      ))}
+                    </Stack>
+                  </div>
+                </div>
+                {identity === "Participant" ? (
+                  <div className="list">
+                    <IconButton
+                      onClick={AddToEventlist}
+                      style={{
+                        width: "48px",
+                        height: "48px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      {isjoined ? (
+                        <BookmarkAddedIcon style={{ padding: "0.5em" }} />
+                      ) : (
+                        <BookmarkAddIcon style={{ padding: "0.5em" }} />
+                      )}
+                    </IconButton>
+                    <p className="info">
+                      {isjoined ? "Joined" : "Add to My Event"}
+                    </p>
+                  </div>
+                ) : (
+                  <></>
+                )}
+              </div>
+            </div>
+
+            <h2 className="description">Description</h2>
+            <hr className="line"></hr>
+            <div className="paragraph">
+              <p>{data.event.description}</p>
+            </div>
+            <HostWrapper>
+              <div style={{ padding: "0px 25px 0px 0px" }}>
+                <div className="hostIcon">{data.event.hostname[0]}</div>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
+              >
+                <strong className="hostedby">HOSTED BY</strong>
+                <p className="hostName">{data.event.hostname}</p>
+                {/* <h1></h1> */}
+                {/* <button className="buttonstyle" type="button">
                   <span>Contact</span>
                 </button> */}
-                            </div>
-                        </HostWrapper>
-                    </EventWrapper>
-                    <CommentWrapper>
-                        {comments.length === 0 ? (
-                            <div className="centerparagraph">
-                                <p>No Rating yet ...</p>
-                            </div>
-                        ) : (
-                            <div className="centerparagraph">
-                                <Stars rating={data.event.rating} displayScore={true} />
-                            </div>
-                        )}
-                        <div className="commentsContainer">
-                            <Comment
-                                username={username}
-                                eventId={id}
-                                comments={comments}
-                                setComments={setComments}
-                                addComment={addComment}
-                            />
-                        </div>
-                    </CommentWrapper>
-                </BodyWrapper>
+              </div>
+            </HostWrapper>
+          </EventWrapper>
+          <CommentWrapper>
+            {comments.length === 0 ? (
+              <div className="centerparagraph">
+                <p>No Rating yet ...</p>
+              </div>
+            ) : (
+              <div className="centerparagraph">
+                <Stars rating={data.event.rating} displayScore={true} />
+              </div>
             )}
-        </Wrapper>
-    )
+            <div className="commentsContainer">
+              <Comment
+                username={username}
+                eventId={id}
+                comments={comments}
+                setComments={setComments}
+                addComment={addComment}
+              />
+            </div>
+          </CommentWrapper>
+        </BodyWrapper>
+      )}
+    </Wrapper>
+  )
 }
 
 export default Event
