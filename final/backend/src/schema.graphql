@@ -1,0 +1,71 @@
+type Query {
+  users(token: String!): User!
+  allEvents: [Event!]!
+  event(id: ID!): Event!
+}
+
+type Mutation {
+  login(username: String!, passwd: String!): String!
+  register(username: String!, passwd: String!, identity: String!): User!
+  logout(username: String!): User!
+  addtoEventlist(username: String!, eventId: ID!): String!
+  event(
+    eventname: String!
+    hostname: String!
+    eventdatefrom: String!
+    eventdateto: String!
+    imageURL: String
+    tags: [String!]
+    description: String!
+  ): String!
+  addComment(
+    eventId: ID!
+    sender: String!
+    stars: Int!
+    body: String!
+    createdAt: String!
+  ): String!
+}
+
+type Subscription {
+  eventCreated(hostname: String!): Event!
+  eventJoined(username: String!): Event!
+  eventCanceled(username: String!): Event!
+  commented(eventId: ID!): Comment!
+}
+
+type User {
+  id: ID
+  username: String!
+  identity: String
+  events: [Event]
+  isLoggedIn: Boolean
+}
+
+type Event {
+  id: ID
+  eventname: String
+  hostname: String
+  eventdatefrom: String
+  eventdateto: String
+  imageURL: String
+  tags: [String]
+  description: String
+  maxparticipants: Int
+
+  participants: [String]
+  rating: Float
+  comments: [Comment]
+  onclicks: Int
+
+  verified: Boolean
+  trending: Boolean
+}
+
+type Comment {
+  id: ID
+  sender: String
+  stars: Int
+  body: String
+  createdAt: String
+}

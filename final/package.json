@@ -1,0 +1,13 @@
+{
+  "name": "NTURentPE",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:dienruei123/NTURentPE.git",
+  "author": "dienruei123 <dienruei@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "cd frontend && yarn start",
+    "server": "cd backend && yarn server",
+    "install:all": "cd frontend && yarn && cd ../backend && yarn"
+  }
+}

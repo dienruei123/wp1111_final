@@ -1,0 +1,121 @@
+.home-hero__title {
+    margin-top: 1em;
+    font-family: raisonne-demibold, Raisonne, Futura, Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    letter-spacing: .02em;
+    line-height: .9em;
+    font-size: 120px;
+    text-transform: uppercase;
+    text-align: center;
+    display: block;
+    position: relative;
+    /* border: 1px solid black; */
+    bottom: -0.09em;
+    margin-bottom: 0;
+}
+
+.home-exhibition__inner {
+    padding: 5vw 0;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.explore-area__header {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 3vw;
+    /* border: 1px solid black; */
+    background-color:rgb(136, 169, 230)
+}
+
+.explore-area__title {
+    font-size: 30px;
+    font-size: 2vw;
+    font-family: raisonne-demibold, Raisonne, Futura, Helvetica, Arial, sans-serif;
+    font-weight: 600;
+    letter-spacing: .02em;
+    line-height: .9em;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    word-break: break-word;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+    text-transform: uppercase;
+}
+
+.work-wrapper {
+    position: relative;
+    cursor: -webkit-grab;
+    cursor: grab;
+    outline: 0;
+    /* border: 1px solid #bbb; */
+}
+
+.work-wrapper-viewport {
+    height: 497.07px;
+    touch-action: pan-y;
+}
+.event-card{
+    position: absolute;
+    left: 35%;
+    width: 32vw;
+    height: 32vw;
+    /* border: 1px solid #bbb; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* z-index: 5px; */
+}
+.event-card:hover{
+    cursor: pointer;
+}
+
+.event-card_wrapper {
+    height: 80%;
+}
+.event-card_info {
+    height: 20%;
+    border: 1px solid rgba(0, 0, 0, 0);
+    font-size: 1.175rem;
+    font-weight: 400;
+    font-family: Twentieth Century W01,Futura,Helvetica,Arial,sans-serif;
+    line-height: 1.46429em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.filckity-slider {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    left: 0px;
+    transform: translateX(0%);
+    animation-name: movingEvents;
+    animation-duration: 15s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-delay: 0;
+    /* border: 1px solid #000; */
+}
+.filckity-slider:hover{
+    animation-play-state: paused;
+}
+
+@keyframes movingEvents {
+    0% {
+        transform: translateX(150%);
+    }
+    100% {
+        transform: translateX(-250%);
+    }
+}
