@@ -1,44 +1,29 @@
 # NTURentPE -> 自動排程的預約網站
 
-## Framework
+## 如何在 localhost 安裝與測試之詳細步驟
 
-![](images/flow.jpg)
+在 ROOT:
 
-- Client: participants, proposers, and admins
-- Interface: Homepage, login, calendar, events, verify...
-- Ideas: login 時選擇角色，calendar 顯示個人行程，events 更新最新活動訊息，create event 要有審核條件，每項 event 結束後會有 feedback 功能。
+- 安裝套件 => yarn install:all
+- 開啟前端 => yarn start
+- 連接後端 => yarn server
 
-## Discussions ＆ TODOs
+## 每位組員之負責項目 (請詳述)
 
-### Week 1(12/05)
+#### B10901038 吳典叡：
 
-#### Discussion
+- 前端登入登出功能：SignUp, SignIn, LogOut …
+- 後端 query data, resolvers, subscription, 處理 comments rating 功能與送出評論時間更新 …
+- 剪片 master
 
-- Create framework, flow, some ideas about the project
+#### B10901190 吳承羲：
 
-#### TODOS
+- 前端 HostPage, Participant 設計
+- 後端 Host 的 Event Create, Proposal Subscription，Participant 的 Event Subscription
+- App Deployment master
 
-Frontend:
+#### B11901174 傅啟恩：
 
-- [x] Homepage (a button navigating to login page)
-- [x] login
-- [x] register
-- [x] After successful login, navigate to corresponding user's page
-
-### 12/27
-
-![](images/2021_12_27.jpg)
-
-#### TODOS
-
-- [x] Register page
-- [x] routes
-- [x] participant page
-- [x] host page
-- [ ] event pages & template
-
-### 1/2
-
-- [x] autoLogin(jwtKey)
-- [x] Logout
-- [x] Admin page
+- 前端 HomePage, EventPage 與 MoreEvents 設計，處理所有活動排序與搜尋功能
+- 後端 Join Event 的 Mutation (在 EventPage)
+- CSS master
