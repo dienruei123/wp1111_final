@@ -1,7 +1,0 @@
-/backend/.env
-/backend/node_modules
-/backend/test-api
-
-/frontend/node_modules
-
-/node_modules
